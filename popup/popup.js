@@ -217,6 +217,19 @@ async function render() {
   }
 }
 
+async function rollGreen() {
+  const groups = await loadAll();
+  const green = groups.filter((g) => g.rating === "green");
+  if (!green.length) {
+    alert("Brak restauracji z zieloną oceną.");
+    return;
+  }
+  const pick = green[Math.floor(Math.random() * green.length)];
+  const url = pick.url || `https://www.pyszne.pl/menu/${pick.restaurantId}`;
+  await browser.tabs.create({ url });
+  window.close();
+}
+
 async function exportNotes() {
   const all = await browser.storage.local.get(null);
   const data = {};
@@ -263,6 +276,7 @@ async function importNotes(file) {
 
 document.addEventListener("DOMContentLoaded", () => {
   $("#search").addEventListener("input", render);
+  $("#roll-btn").addEventListener("click", rollGreen);
   $("#export-btn").addEventListener("click", exportNotes);
   $("#import-btn").addEventListener("click", () => $("#import-file").click());
   $("#import-file").addEventListener("change", (e) => {

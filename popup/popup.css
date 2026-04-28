@@ -55,15 +55,35 @@ header h1 {
   padding: 8px 12px;
   border-bottom: 1px solid #eee;
   background: #fff;
+  display: flex;
+  gap: 6px;
+  align-items: center;
 }
 
 #search {
-  width: 100%;
-  box-sizing: border-box;
+  flex: 1;
+  min-width: 0;
   padding: 6px 8px;
   font-size: 13px;
   border: 1px solid #ccc;
   border-radius: 6px;
+}
+
+#roll-btn {
+  flex: 0 0 auto;
+  appearance: none;
+  background: #fff7ee;
+  color: #b35900;
+  border: 1px solid #ff8000;
+  border-radius: 6px;
+  padding: 5px 8px;
+  font-size: 15px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+#roll-btn:hover {
+  background: #ffe9d1;
 }
 
 #search:focus {
