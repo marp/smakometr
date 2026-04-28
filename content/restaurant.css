@@ -1,0 +1,82 @@
+body.pysznepl-rated--red section[class^='page-style_content'],body.pysznepl-rated--red  div[class^='restaurant-header-style_restaurant-header']:first-child{
+    background-image: linear-gradient(90deg, #e74c3c, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff, #e74c3c);
+}
+
+body.pysznepl-rated--orange section[class^='page-style_content'],body.pysznepl-rated--orange div[class^='restaurant-header-style_restaurant-header']:first-child{
+    background-image: linear-gradient(90deg, #b35900, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff, #b35900);
+}
+
+body.pysznepl-rated--green section[class^='page-style_content'],body.pysznepl-rated--green  div[class^='restaurant-header-style_restaurant-header']:first-child{
+    background-image: linear-gradient(90deg, green, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff, green);
+}
+
+div[class^='restaurant-header-style'] > div:first-child{
+    /*background: unset;*/
+}
+
+
+/* ---------- restaurant page toolbar (below restaurant name) ---------- */
+
+.pysznepl-toolbar--page {
+  /* Make the toolbar span the whole row under the restaurant name.
+     Works both when the heading container is a normal block and when it's
+     a flex row with other header actions on the right. */
+  display: flex;
+  flex: 0 0 100%;
+  width: 100%;
+  box-sizing: border-box;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  min-width: 0;
+  /* Allow JS to stretch it to the full header container width.
+     Remove horizontal margins that would otherwise offset calculations. */
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.pysznepl-toolbar--page .pysznepl-toolbar__controls {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  width: 100%;
+  min-width: 0;
+}
+
+.pysznepl-toolbar--page .pysznepl-toolbar__slot {
+  /* Keep slots from stretching to full width in the controls row. */
+  width: auto;
+}
+
+.pysznepl-toolbar__note-preview {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  font-weight: 700;
+  font-size: 15px;
+  color: #b35900;
+  line-height: 1.25;
+  width: 100%;
+  max-width: 100%;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.pysznepl-toolbar__note-preview--empty {
+  font-weight: 600;
+  opacity: 0.65;
+}
+
+/* On the restaurant page the rating is applied to <body>, so the overlay
+   has to be fixed and cover the whole viewport. No outline on body — it
+   would just be a thin frame at the very edge of the screen. */
+body.pysznepl-rated {
+  outline: none !important;
+}
+body.pysznepl-rated::before {
+  /* Keep body classes for state, but disable the full-page overlay. */
+  content: none !important;
+  background: transparent !important;
+}

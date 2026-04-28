@@ -1,0 +1,234 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial,
+    sans-serif;
+  color: #222;
+  background: #fafafa;
+}
+
+body {
+  width: 380px;
+  max-height: 560px;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  background: #ff8000;
+  color: #fff;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+header h1 {
+  font-size: 14px;
+  margin: 0;
+  letter-spacing: 0.2px;
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+}
+
+.actions button {
+  background: #fff;
+  color: #b35900;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.actions button:hover {
+  background: #ffe9d1;
+}
+
+#search-bar {
+  padding: 8px 12px;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+}
+
+#search {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 8px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+#search:focus {
+  outline: 2px solid #ff8000;
+  outline-offset: 0;
+  border-color: #ff8000;
+}
+
+main {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 12px 12px;
+}
+
+.empty {
+  color: #888;
+  font-size: 13px;
+  margin: 16px 4px;
+}
+
+.restaurant {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.restaurant__header {
+  padding: 8px 10px;
+  background: #fff7ee;
+  border-bottom: 1px solid #f1e0c8;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.restaurant__name {
+  font-weight: 600;
+  font-size: 13px;
+  color: #b35900;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.restaurant__title {
+  flex: 1;
+  min-width: 0;
+}
+
+.restaurant__name a {
+  color: #b35900;
+  text-decoration: none;
+}
+
+.restaurant__name a:hover {
+  text-decoration: underline;
+}
+
+.restaurant__dot {
+  flex: 0 0 auto;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  display: inline-block;
+}
+
+.restaurant__dot--red {
+  background: #e74c3c;
+}
+.restaurant__dot--orange {
+  background: #f39c12;
+}
+.restaurant__dot--green {
+  background: #2ecc71;
+}
+
+.restaurant--rated-red {
+  border-left: 4px solid #e74c3c;
+}
+.restaurant--rated-orange {
+  border-left: 4px solid #f39c12;
+}
+.restaurant--rated-green {
+  border-left: 4px solid #2ecc71;
+}
+
+.note {
+  padding: 8px 10px;
+  border-top: 1px solid #f4f4f4;
+}
+
+.note:first-child {
+  border-top: none;
+}
+
+.note__label {
+  font-size: 11px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  margin-bottom: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.note__title {
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.note__body {
+  font-size: 12px;
+  color: #333;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.note__delete {
+  background: transparent;
+  border: none;
+  color: #c00;
+  font-size: 11px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.note__delete:hover {
+  text-decoration: underline;
+}
+
+.popup-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px 10px;
+  background: #fff;
+  border-top: 1px solid #eee;
+  font-size: 11px;
+  color: #666;
+}
+
+.popup-footer a {
+  color: #b35900;
+  text-decoration: none;
+}
+
+.popup-footer a:hover {
+  text-decoration: underline;
+}
+
+.github-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.github-icon {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+}

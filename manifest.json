@@ -1,0 +1,54 @@
+{
+  "manifest_version": 2,
+  "name": "Smakometr dla Pyszne.pl",
+  "version": "1.0.0",
+  "description": "Dodawaj prywatne notatki do restauracji i dań na pyszne.pl.",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "smakometr@local",
+      "strict_min_version": "78.0"
+    }
+  },
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "icons": {
+    "48": "icons/icon.svg",
+    "96": "icons/icon.svg"
+  },
+  "browser_action": {
+    "default_title": "Smakometr dla Pyszne.pl",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "48": "icons/icon.svg",
+      "96": "icons/icon.svg"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.pyszne.pl/*",
+        "*://pyszne.pl/*"
+      ],
+      "js": ["content/content.js"],
+      "css": ["content/content.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "*://*.pyszne.pl/menu/*",
+        "*://pyszne.pl/menu/*"
+      ],
+      "css": [
+        "content/restaurant.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    "content/toolbar-card.html",
+    "content/toolbar-restaurant.html",
+    "content/note-widget.html"
+  ]
+}
