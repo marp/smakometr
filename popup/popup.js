@@ -205,17 +205,18 @@ function buildRestaurantNode(group) {
           group.dishes.map((dish) => {
             const thumbIcon =
               dish.thumbRating === "up" ? "👍" : dish.thumbRating === "down" ? "👎" : null;
+            const deletableKeys = [dish.key, dish.thumbKey].filter(Boolean);
             return el("div", { class: "dish-item" }, [
               el("div", { class: "dish-row" }, [
                 thumbIcon ? el("span", { class: "dish-row__thumb" }, [thumbIcon]) : null,
                 el("span", { class: "dish-row__name", text: dish.name }),
-                dish.key
+                deletableKeys.length
                   ? el("button", {
                       class: "note__delete",
                       type: "button",
                       text: "Usuń",
                       onclick: async () => {
-                        await deleteNote(dish.key);
+                        for (const k of deletableKeys) await deleteNote(k);
                         render();
                       },
                     })
