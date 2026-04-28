@@ -194,12 +194,6 @@ main {
   gap: 8px;
 }
 
-.note__title {
-  font-weight: 600;
-  font-size: 13px;
-  margin-bottom: 4px;
-}
-
 .note__body {
   font-size: 12px;
   color: #333;
@@ -218,6 +212,40 @@ main {
 
 .note__delete:hover {
   text-decoration: underline;
+}
+
+.dish-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 4px;
+}
+
+.dish-row {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.dish-row__thumb {
+  flex: 0 0 auto;
+  font-size: 13px;
+}
+
+.dish-row__name {
+  flex: 1;
+  min-width: 0;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.dish-row__body {
+  font-size: 12px;
+  color: #333;
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin-top: 2px;
+  padding-left: 4px;
 }
 
 .popup-footer {

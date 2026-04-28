@@ -13,7 +13,37 @@
 }
 
 .pysznepl-note--compact {
-  margin: 4px 0;
+  margin: 2px 4px;
+}
+
+.pysznepl-note--compact .pysznepl-note__toggle {
+  background: transparent;
+  border-color: transparent;
+  padding: 1px 3px;
+  font-weight: normal;
+  opacity: 0.35;
+  transition: opacity 0.12s, background 0.12s, border-color 0.12s;
+}
+
+.pysznepl-note--compact .pysznepl-note__toggle:hover {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: transparent;
+  opacity: 0.8;
+}
+
+.pysznepl-note--compact .pysznepl-note__toggle--has-note {
+  background: rgba(0, 0, 0, 0.07);
+  border-color: rgba(0, 0, 0, 0.2);
+  color: inherit;
+  opacity: 1;
+}
+
+.pysznepl-note--compact .pysznepl-note__toggle--has-note:hover {
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.pysznepl-note--compact .pysznepl-note__indicator {
+  display: none;
 }
 
 .pysznepl-note__toggle {
@@ -62,17 +92,18 @@
 }
 
 .pysznepl-note__panel {
-  margin-top: 6px;
+  position: fixed;
+  z-index: 2147483600;
   background: #fff;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 8px 10px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   width: 320px;
-  max-width: 100%;
+  max-width: calc(100vw - 24px);
 }
 
-.pysznepl-note--compact .pysznepl-note__panel {
+.pysznepl-note__panel--compact {
   width: 280px;
 }
 
@@ -107,6 +138,42 @@
   font-size: 11px;
   color: #888;
   min-height: 14px;
+}
+
+/* ---------- dish thumb buttons ---------- */
+
+.pysznepl-thumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin: 2px 4px;
+  vertical-align: middle;
+  position: relative;
+  z-index: 5;
+}
+
+.pysznepl-thumb__btn {
+  appearance: none;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 1px 3px;
+  font-size: 13px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.35;
+  transition: opacity 0.12s, background 0.12s, border-color 0.12s;
+}
+
+.pysznepl-thumb__btn:hover {
+  opacity: 0.8;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.pysznepl-thumb__btn--active {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.07);
+  border-color: rgba(0, 0, 0, 0.2);
 }
 
 /* ---------- toolbar (rating + note) ---------- */

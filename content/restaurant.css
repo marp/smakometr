@@ -10,11 +10,6 @@ body.pysznepl-rated--green section[class^='page-style_content'],body.pysznepl-ra
     background-image: linear-gradient(90deg, green, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff, green);
 }
 
-div[class^='restaurant-header-style'] > div:first-child{
-    /*background: unset;*/
-}
-
-
 /* ---------- restaurant page toolbar (below restaurant name) ---------- */
 
 .pysznepl-toolbar--page {

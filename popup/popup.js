@@ -27,15 +27,9 @@ function hasContent(group) {
 
 async function loadAll() {
   const all = await browser.storage.local.get(null);
-  const groups = new Map(); // restaurantId -> { restaurantName, restaurantNote, dishes: [] }
+  const groups = new Map();
 
-  for (const [key, value] of Object.entries(all)) {
-    if (!isNoteKey(key)) continue;
-    const meta = all[key + META_SUFFIX] || {};
-    const parts = key.split("::"); // [STORAGE_PREFIX, type, restaurantId, ...]
-    const type = parts[1];
-    const restaurantId = parts[2] || meta.restaurantId || "(nieznana)";
-
+  function getGroup(restaurantId, meta) {
     if (!groups.has(restaurantId)) {
       groups.set(restaurantId, {
         restaurantId,
@@ -46,37 +40,66 @@ async function loadAll() {
         restaurantUpdatedAt: 0,
         rating: "",
         ratingKey: null,
-        dishes: [],
+        dishMap: new Map(),
       });
     }
-    const group = groups.get(restaurantId);
+    const g = groups.get(restaurantId);
+    if (meta.url && !g.url) g.url = meta.url;
+    if (meta.restaurantName && !g.restaurantName) g.restaurantName = meta.restaurantName;
+    return g;
+  }
 
-    if (meta.url && !group.url) group.url = meta.url;
-    if (meta.restaurantName && !group.restaurantName) {
-      group.restaurantName = meta.restaurantName;
+  function getDish(group, dishSlug, meta) {
+    if (!group.dishMap.has(dishSlug)) {
+      group.dishMap.set(dishSlug, {
+        key: null,
+        thumbKey: null,
+        name: meta.dishName || dishSlug,
+        body: null,
+        updatedAt: 0,
+        thumbRating: "",
+      });
     }
+    return group.dishMap.get(dishSlug);
+  }
+
+  for (const [key, value] of Object.entries(all)) {
+    if (!isNoteKey(key)) continue;
+    const meta = all[key + META_SUFFIX] || {};
+    const parts = key.split("::");
+    const type = parts[1];
+    const restaurantId = parts[2] || meta.restaurantId || "(nieznana)";
+    const group = getGroup(restaurantId, meta);
 
     if (type === "restaurant") {
       group.restaurantNote = value;
       group.restaurantNoteKey = key;
       group.restaurantUpdatedAt = meta.updatedAt || 0;
     } else if (type === "dish") {
-      group.dishes.push({
-        key,
-        name: meta.dishName || parts.slice(3).join("::"),
-        body: value,
-        updatedAt: meta.updatedAt || 0,
-      });
+      const dishSlug = parts.slice(3).join("::");
+      const dish = getDish(group, dishSlug, meta);
+      dish.key = key;
+      dish.name = meta.dishName || dishSlug;
+      dish.body = value;
+      dish.updatedAt = meta.updatedAt || 0;
+    } else if (type === "dish-rating") {
+      const dishSlug = parts.slice(3).join("::");
+      const dish = getDish(group, dishSlug, meta);
+      dish.thumbKey = key;
+      dish.thumbRating = value;
+      if (!dish.name && meta.dishName) dish.name = meta.dishName;
     } else if (type === "rating") {
       group.rating = value;
       group.ratingKey = key;
     }
   }
 
-  // Sort dishes alphabetically inside each restaurant; sort restaurants by name.
   const list = Array.from(groups.values());
   for (const g of list) {
-    g.dishes.sort((a, b) => a.name.localeCompare(b.name, "pl"));
+    g.dishes = Array.from(g.dishMap.values())
+      .filter((d) => d.body || d.thumbRating)
+      .sort((a, b) => a.name.localeCompare(b.name, "pl"));
+    delete g.dishMap;
   }
   list.sort((a, b) =>
     (a.restaurantName || a.restaurantId).localeCompare(
@@ -172,23 +195,36 @@ function buildRestaurantNode(group) {
     );
   }
 
-  for (const dish of group.dishes) {
+  if (group.dishes.length > 0) {
     node.appendChild(
       el("div", { class: "note" }, [
-        el("div", { class: "note__label" }, [
-          document.createTextNode("Danie"),
-          el("button", {
-            class: "note__delete",
-            type: "button",
-            text: "Usuń",
-            onclick: async () => {
-              await deleteNote(dish.key);
-              render();
-            },
-          }),
-        ]),
-        el("div", { class: "note__title", text: dish.name }),
-        el("div", { class: "note__body", text: dish.body }),
+        el("div", { class: "note__label" }, [document.createTextNode("Dania")]),
+        el(
+          "div",
+          { class: "dish-list" },
+          group.dishes.map((dish) => {
+            const thumbIcon =
+              dish.thumbRating === "up" ? "👍" : dish.thumbRating === "down" ? "👎" : null;
+            return el("div", { class: "dish-item" }, [
+              el("div", { class: "dish-row" }, [
+                thumbIcon ? el("span", { class: "dish-row__thumb" }, [thumbIcon]) : null,
+                el("span", { class: "dish-row__name", text: dish.name }),
+                dish.key
+                  ? el("button", {
+                      class: "note__delete",
+                      type: "button",
+                      text: "Usuń",
+                      onclick: async () => {
+                        await deleteNote(dish.key);
+                        render();
+                      },
+                    })
+                  : null,
+              ]),
+              dish.body ? el("div", { class: "dish-row__body", text: dish.body }) : null,
+            ]);
+          })
+        ),
       ])
     );
   }
