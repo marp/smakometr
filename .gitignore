@@ -27,7 +27,18 @@ build/
 .parcel-cache/
 .cache/
 
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# web-ext build output
+web-ext-artifacts/
+
 # Env files
 .env
 .env.*
 
+# Zip files
+smakometr.zip
