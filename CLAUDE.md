@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this project is
 
-A Firefox browser extension (Manifest V2) that adds private notes and colour ratings to restaurants and dishes on pyszne.pl. All data is stored locally in `browser.storage.local` — nothing leaves the browser.
+A Firefox browser extension (Manifest V3) that adds private notes and colour ratings to restaurants and dishes on pyszne.pl. All data is stored locally in `browser.storage.local` — nothing leaves the browser.
 
 ## Installation / development
 
