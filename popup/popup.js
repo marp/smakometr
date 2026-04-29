@@ -128,7 +128,6 @@ function el(tag, props = {}, children = []) {
   for (const [k, v] of Object.entries(props)) {
     if (k === "class") node.className = v;
     else if (k === "text") node.textContent = v;
-    else if (k === "html") node.innerHTML = v;
     else if (k.startsWith("on")) node.addEventListener(k.slice(2), v);
     else node.setAttribute(k, v);
   }
@@ -241,7 +240,7 @@ async function render() {
   );
 
   const container = $("#restaurants");
-  container.innerHTML = "";
+  container.replaceChildren();
 
   if (filtered.length === 0) {
     $("#empty").hidden = false;
