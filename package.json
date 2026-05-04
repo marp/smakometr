@@ -5,9 +5,9 @@
   "private": true,
   "description": "Web extension for private notes and ratings on pyszne.pl",
   "scripts": {
-    "lint:ext": "web-ext lint --source-dir=. --ignore-files=node_modules tests playwright.config.js package*.json smakometr.zip",
-    "build:ext": "web-ext build --source-dir=. --overwrite-dest --ignore-files=node_modules tests playwright.config.js package*.json smakometr.zip",
-    "run:ext": "web-ext run --source-dir=. --ignore-files=node_modules tests playwright.config.js package*.json smakometr.zip",
+    "lint:ext": "web-ext lint --source-dir=src",
+    "build:ext": "web-ext build --source-dir=src --overwrite-dest",
+    "run:ext": "web-ext run --source-dir=src",
     "test": "playwright test",
     "test:ui": "playwright test --ui"
   },

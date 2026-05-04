@@ -18,7 +18,8 @@
   ],
   "icons": {
     "48": "icons/icon.svg",
-    "96": "icons/icon.svg"
+    "96": "icons/icon.svg",
+    "128": "icons/icon.svg"
   },
   "action": {
     "default_title": "Smakometr dla Pyszne.pl",
