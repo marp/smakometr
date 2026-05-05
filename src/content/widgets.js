@@ -58,7 +58,7 @@ function templateToElement(html) {
 
 // ---------- thumb buttons ----------
 
-function buildThumbButtons({ key, meta }) {
+function buildThumbButtons({ key, meta, target = null }) {
   const wrapper = document.createElement("div");
   wrapper.className = "pysznepl-thumb";
   wrapper.setAttribute(MARKER_ATTR, "1");
@@ -66,13 +66,13 @@ function buildThumbButtons({ key, meta }) {
 
   const upBtn = document.createElement("button");
   upBtn.type = "button";
-  upBtn.className = "pysznepl-thumb__btn pysznepl-thumb__btn--up";
+  upBtn.className = "pysznepl-btn pysznepl-btn--up";
   upBtn.title = "Dobre danie";
   upBtn.textContent = "👍";
 
   const downBtn = document.createElement("button");
   downBtn.type = "button";
-  downBtn.className = "pysznepl-thumb__btn pysznepl-thumb__btn--down";
+  downBtn.className = "pysznepl-btn pysznepl-btn--down";
   downBtn.title = "Słabe danie";
   downBtn.textContent = "👎";
 
@@ -82,8 +82,12 @@ function buildThumbButtons({ key, meta }) {
 
   function applyState(v) {
     current = v;
-    upBtn.classList.toggle("pysznepl-thumb__btn--active", v === "up");
-    downBtn.classList.toggle("pysznepl-thumb__btn--active", v === "down");
+    upBtn.classList.toggle("pysznepl-btn--active", v === "up");
+    downBtn.classList.toggle("pysznepl-btn--active", v === "down");
+    if (target) {
+      target.classList.toggle("pysznepl-dish--up", v === "up");
+      target.classList.toggle("pysznepl-dish--down", v === "down");
+    }
   }
 
   async function handleClick(v) {
@@ -110,10 +114,10 @@ function buildThumbButtons({ key, meta }) {
 
 // ---------- note button ----------
 
-async function buildNoteButton({ key, label, meta, onValueChange = null }) {
+async function buildNoteButton({ key, label, meta, onValueChange = null, hoverTarget = null }) {
   const btn = document.createElement("button");
   btn.type = "button";
-  btn.className = "pysznepl-note-btn";
+  btn.className = "pysznepl-btn";
   btn.textContent = "📝";
   btn.setAttribute(MARKER_ATTR, "1");
   stopPropOn(btn, ["click", "mousedown", "mouseup", "pointerdown", "pointerup", "keydown", "keyup"]);
@@ -123,14 +127,25 @@ async function buildNoteButton({ key, label, meta, onValueChange = null }) {
   function apply(value) {
     cached = value || "";
     const has = !!(value && value.trim());
-    btn.classList.toggle("pysznepl-note-btn--has-note", has);
+    btn.classList.toggle("pysznepl-btn--active", has);
     btn.title = has ? value.trim() : label;
     try { onValueChange?.(cached); } catch (_) {}
   }
 
+  const tooltipEl = hoverTarget || btn;
+  tooltipEl.addEventListener("mouseenter", () => {
+    if (!cached.trim()) return;
+    const t = ensureTooltip();
+    t.textContent = cached;
+    t.hidden = false;
+    positionTooltipNear(tooltipEl.getBoundingClientRect());
+  });
+  tooltipEl.addEventListener("mouseleave", hideTooltip);
+
   btn.addEventListener("click", (e) => {
     e.preventDefault();
     e.stopPropagation();
+    hideTooltip();
     const result = window.prompt(label, cached);
     if (result === null) return;
     apply(result);

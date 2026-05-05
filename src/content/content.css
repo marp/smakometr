@@ -1,32 +1,16 @@
-/* ---------- dish note prompt button ---------- */
+/* ---------- dish rating outline ---------- */
 
-.pysznepl-note-btn {
-  appearance: none;
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: 4px;
-  padding: 1px 3px;
-  font-size: 13px;
-  line-height: 1;
-  cursor: pointer;
-  opacity: 0.35;
-  vertical-align: middle;
-  margin: 2px 2px;
-  transition: opacity 0.12s, background 0.12s, border-color 0.12s;
+.pysznepl-dish--up {
+  border: 3px solid rgba(46, 204, 113, 0.85);
+  border-radius: 12px;
 }
 
-.pysznepl-note-btn:hover {
-  opacity: 0.8;
-  background: rgba(0, 0, 0, 0.06);
+.pysznepl-dish--down {
+  border: 3px solid rgba(231, 76, 60, 0.85);
+  border-radius: 12px;
 }
 
-.pysznepl-note-btn--has-note {
-  opacity: 1;
-  background: rgba(0, 0, 0, 0.07);
-  border-color: rgba(0, 0, 0, 0.2);
-}
-
-/* ---------- dish thumb buttons ---------- */
+/* ---------- buttons (thumbs + note) ---------- */
 
 .pysznepl-thumb {
   display: inline-flex;
@@ -38,7 +22,7 @@
   z-index: 5;
 }
 
-.pysznepl-thumb__btn {
+.pysznepl-btn {
   appearance: none;
   background: transparent;
   border: 1px solid transparent;
@@ -51,12 +35,12 @@
   transition: opacity 0.12s, background 0.12s, border-color 0.12s;
 }
 
-.pysznepl-thumb__btn:hover {
+.pysznepl-btn:hover {
   opacity: 0.8;
   background: rgba(0, 0, 0, 0.06);
 }
 
-.pysznepl-thumb__btn--active {
+.pysznepl-btn--active {
   opacity: 1;
   background: rgba(0, 0, 0, 0.07);
   border-color: rgba(0, 0, 0, 0.2);
@@ -142,7 +126,7 @@
   gap: 6px;
   padding: 4px 6px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.96);
+  background: #eeeeee;
   border: 1px solid rgba(0, 0, 0, 0.12);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }

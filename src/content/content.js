@@ -256,15 +256,18 @@ async function attachDishWidgets() {
     const lower = dishName.toLowerCase();
     const meta = { type: "dish", restaurantId, dishName, url: location.href };
 
+    const dishTarget = Array.from(dish.children).find(el => el.contains(nameEl)) || dish;
     const thumbs = buildThumbButtons({
       key: storageKey("dish-rating", restaurantId, lower),
       meta: { ...meta, type: "dish-rating" },
+      target: dishTarget,
     });
 
     const noteBtn = await buildNoteButton({
       key: storageKey("dish", restaurantId, lower),
       label: `Notatka o daniu: ${dishName}`,
       meta,
+      hoverTarget: dishTarget,
     });
     thumbs.appendChild(noteBtn);
 
