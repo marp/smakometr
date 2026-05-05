@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Smakometr dla Pyszne.pl",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "description": "Dodawaj prywatne notatki do restauracji i dań na pyszne.pl.",
   "browser_specific_settings": {
     "gecko": {
