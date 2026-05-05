@@ -1,7 +1,6 @@
 {
   "name": "smakometr",
   "author": "Marp",
-  "version": "1.0.0",
   "private": true,
   "description": "Web extension for private notes and ratings on pyszne.pl",
   "scripts": {

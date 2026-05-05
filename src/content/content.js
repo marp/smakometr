@@ -47,7 +47,7 @@ const LISTING_NAME_SELECTORS = [
   "h3",
 ];
 
-const RESTAURANT_CARD_SELECTOR = '[class*="restaurant-card" i]';
+const RESTAURANT_CARD_SELECTOR = '[data-qa="restaurant-card"], [class*="restaurant-card" i]';
 
 // ---------- page helpers ----------
 
@@ -114,6 +114,7 @@ function findDishNameElement(dishEl) {
 }
 
 function isRestaurantCardEl(el) {
+  if (el?.dataset?.qa === "restaurant-card") return true;
   if (!el?.classList) return false;
   for (const cls of el.classList) {
     if (cls.toLowerCase().startsWith("restaurant-card")) return true;
@@ -314,7 +315,7 @@ async function attachListingCards() {
 
   for (const card of document.querySelectorAll(RESTAURANT_CARD_SELECTOR)) {
     if (!isRestaurantCardEl(card)) continue;
-    if (card.parentElement?.closest(RESTAURANT_CARD_SELECTOR)) continue;
+    if (card.parentElement?.closest('[data-qa="restaurant-card"]')) continue;
 
     const anchor = card.querySelector('a[href*="/menu/"]');
     if (!anchor) continue;
