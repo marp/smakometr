@@ -114,11 +114,11 @@ function buildThumbButtons({ key, meta, target = null }) {
 
 // ---------- note button ----------
 
-async function buildNoteButton({ key, label, meta, onValueChange = null, hoverTarget = null }) {
+async function buildNoteButton({ key, label, meta, onValueChange = null, hoverTarget = null, buttonText = "📝", extraClass = "" }) {
   const btn = document.createElement("button");
   btn.type = "button";
-  btn.className = "pysznepl-btn";
-  btn.textContent = "📝";
+  btn.className = extraClass ? `pysznepl-btn ${extraClass}` : "pysznepl-btn";
+  btn.textContent = buttonText;
   btn.setAttribute(MARKER_ATTR, "1");
   stopPropOn(btn, ["click", "mousedown", "mouseup", "pointerdown", "pointerup", "keydown", "keyup"]);
 
@@ -238,6 +238,8 @@ async function buildToolbar({ restaurantId, restaurantName, url, compact, collap
     label: `Notatka o restauracji: ${restaurantName || restaurantId}`,
     meta: { type: "restaurant", restaurantId, restaurantName, url },
     onValueChange: notePreviewEl ? setNotePreview : null,
+    buttonText: "📝 Notatka",
+    extraClass: "pysznepl-btn--action",
   });
 
   toolbar.querySelector('[data-slot="rating"]')?.appendChild(ratingControl);
