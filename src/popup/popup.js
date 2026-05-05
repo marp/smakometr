@@ -157,8 +157,23 @@ function buildRestaurantNode(group) {
       })
     : document.createTextNode(group.restaurantName || group.restaurantId);
 
+  const allRestaurantKeys = [
+    group.restaurantNoteKey,
+    group.ratingKey,
+    ...group.dishes.flatMap((d) => [d.key, d.thumbKey]),
+  ].filter(Boolean);
+
   const nameRow = el("div", { class: "restaurant__name" }, [
     el("span", { class: "restaurant__title" }, [nameContent]),
+    el("button", {
+      class: "note__delete",
+      type: "button",
+      text: "Usuń",
+      onclick: async () => {
+        for (const k of allRestaurantKeys) await deleteNote(k);
+        render();
+      },
+    }),
   ]);
 
   if (group.rating) {
