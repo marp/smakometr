@@ -1,16 +1,20 @@
-# Smakometr
-Proste rozszerzenie Firefox, które dodaje:
+# Smakometr dla pyszne.pl
+„Brałem to już kiedyś — było dobre?” Smakometr przypomni! Zapisuj notatki, oceniaj kolorami restauracje i oceniaj dania oraz restauracje na pyszne.pl, żeby już nigdy nie zgadywać przy zamówieniu.
 
 > **[Pobierz ze strony Firefox Add-ons](https://addons.mozilla.org/pl/firefox/addon/smakometr-dla-pyszne-pl/)**
 
-
+## Co potrafi to rozszerzenie?
 - pole notatki obok nazwy restauracji (zarówno na liście wyszukiwania,
   np. `pyszne.pl/na-dowoz/jedzenie/...`, jak i na stronie restauracji),
 - pole notatki obok każdego dania na stronie restauracji,
-- prosty system kolorystycznej oceny restauracji
+- prosty system kolorystycznej oceny restauracji i produktów
   (czerwony / pomarańczowy / zielony) — kolor podświetla całą kartę
   restauracji na liście oraz nagłówek strony restauracji. Kolory mają
   warianty dla jasnego i ciemnego motywu (`prefers-color-scheme`).
+
+![rate_restaurant_in_list_view.gif](readme/rate_restaurant_in_list_view.gif)
+![rate_restaurant_restaurant_view.gif](readme/rate_restaurant_restaurant_view.gif)
+![rate_product.gif](readme/rate_product.gif)
 
 Wszystko zapisywane jest lokalnie (`browser.storage.local`) i pozostaje
 prywatne — nic nie jest wysyłane na zewnątrz.
