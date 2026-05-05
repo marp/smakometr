@@ -261,18 +261,17 @@ async function attachDishWidgets() {
       meta: { ...meta, type: "dish-rating" },
     });
 
-    const widget = await buildWidget({
+    const noteBtn = await buildNoteButton({
       key: storageKey("dish", restaurantId, lower),
       label: `Notatka o daniu: ${dishName}`,
       meta,
-      compact: true,
     });
+    thumbs.appendChild(noteBtn);
 
     if (nameEl.parentElement) {
       nameEl.parentElement.insertBefore(thumbs, nameEl.nextSibling);
-      nameEl.parentElement.insertBefore(widget, thumbs.nextSibling);
     } else {
-      dish.append(thumbs, widget);
+      dish.append(thumbs);
     }
   }
 }

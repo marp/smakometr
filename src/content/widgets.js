@@ -39,7 +39,6 @@ function stopPropOn(el, events) {
 // ---------- template loading ----------
 
 const TEMPLATE_CACHE = new Map();
-let NOTE_WIDGET_EL = null;
 
 async function loadTemplate(name) {
   if (!TEMPLATE_CACHE.has(name)) {
@@ -55,14 +54,6 @@ function templateToElement(html) {
   const t = document.createElement("template");
   t.innerHTML = html.trim();
   return t.content.firstElementChild;
-}
-
-async function getNoteWidgetTemplate() {
-  if (!NOTE_WIDGET_EL) {
-    NOTE_WIDGET_EL = templateToElement(await loadTemplate("note-widget.html"));
-    if (!NOTE_WIDGET_EL) throw new Error("Invalid note widget template");
-  }
-  return NOTE_WIDGET_EL;
 }
 
 // ---------- thumb buttons ----------
@@ -117,100 +108,37 @@ function buildThumbButtons({ key, meta }) {
   return wrapper;
 }
 
-// ---------- note widget ----------
+// ---------- note button ----------
 
-async function buildWidget({ key, label, meta, compact = false, onValueChange = null }) {
-  const wrapper = (await getNoteWidgetTemplate()).cloneNode(true);
-  wrapper.classList.toggle("pysznepl-note--compact", !!compact);
-  wrapper.setAttribute(MARKER_ATTR, "1");
-  stopPropOn(wrapper, ["click", "mousedown", "mouseup", "keydown", "keyup", "keypress"]);
+async function buildNoteButton({ key, label, meta, onValueChange = null }) {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "pysznepl-note-btn";
+  btn.textContent = "📝";
+  btn.setAttribute(MARKER_ATTR, "1");
+  stopPropOn(btn, ["click", "mousedown", "mouseup", "pointerdown", "pointerup", "keydown", "keyup"]);
 
-  const toggle      = wrapper.querySelector('[data-role="toggle"]');
-  const indicator   = wrapper.querySelector('[data-role="indicator"]');
-  const toggleLabel = wrapper.querySelector('[data-role="toggle-label"]');
-  const panel       = wrapper.querySelector('[data-role="panel"]');
-  if (compact) panel.classList.add("pysznepl-note__panel--compact");
-  const title       = wrapper.querySelector('[data-role="title"]');
-  const textarea    = wrapper.querySelector('[data-role="textarea"]');
-  const status      = wrapper.querySelector('[data-role="status"]');
+  let cached = "";
 
-  if (!toggle || !indicator || !toggleLabel || !panel || !title || !textarea || !status) {
-    throw new Error("Note widget template is missing required elements");
-  }
-
-  toggle.title = label;
-  toggleLabel.textContent = compact ? "📝" : "📝 Notatka";
-  title.textContent = label;
-  textarea.rows = compact ? 3 : 4;
-
-  function applyIndicator(value) {
+  function apply(value) {
+    cached = value || "";
     const has = !!(value && value.trim());
-    indicator.classList.toggle("pysznepl-note__indicator--filled", has);
-    toggle.classList.toggle("pysznepl-note__toggle--has-note", has);
+    btn.classList.toggle("pysznepl-note-btn--has-note", has);
+    btn.title = has ? value.trim() : label;
+    try { onValueChange?.(cached); } catch (_) {}
   }
 
-  let onDocClick = null;
-  let onScroll = null;
-
-  function closePanel() {
-    panel.hidden = true;
-    toggle.setAttribute("aria-expanded", "false");
-    if (onDocClick) { document.removeEventListener("click", onDocClick); onDocClick = null; }
-    if (onScroll) { window.removeEventListener("scroll", onScroll, true); onScroll = null; }
-  }
-
-  toggle.addEventListener("click", (e) => {
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
     e.stopPropagation();
-    if (!panel.hidden) { closePanel(); return; }
-
-    // Move panel to body once so it escapes overflow/stacking contexts
-    if (panel.parentElement !== document.body) {
-      document.body.appendChild(panel);
-      stopPropOn(panel, ["click", "mousedown", "mouseup", "keydown", "keyup"]);
-    }
-
-    const rect = toggle.getBoundingClientRect();
-    const vw = document.documentElement.clientWidth;
-    let left = rect.left;
-    if (left + 320 > vw - 8) left = vw - 320 - 8;
-    if (left < 8) left = 8;
-    panel.style.top = (rect.bottom + 4) + "px";
-    panel.style.left = left + "px";
-
-    panel.hidden = false;
-    toggle.setAttribute("aria-expanded", "true");
-    textarea.focus();
-
-    onDocClick = (ev) => {
-      if (!panel.contains(ev.target) && !wrapper.contains(ev.target)) closePanel();
-    };
-    onScroll = () => closePanel();
-    setTimeout(() => {
-      document.addEventListener("click", onDocClick);
-      window.addEventListener("scroll", onScroll, { passive: true, capture: true });
-    }, 0);
+    const result = window.prompt(label, cached);
+    if (result === null) return;
+    apply(result);
+    setNote(key, result, meta);
   });
 
-  let saveTimer = null;
-  textarea.addEventListener("input", () => {
-    status.textContent = "Zapisywanie…";
-    applyIndicator(textarea.value);
-    try { onValueChange?.(textarea.value || ""); } catch (_) {}
-    clearTimeout(saveTimer);
-    saveTimer = setTimeout(async () => {
-      await setNote(key, textarea.value, meta);
-      status.textContent = textarea.value.trim() ? "Zapisano ✓" : "Notatka usunięta";
-      setTimeout(() => { status.textContent = ""; }, 1500);
-    }, 350);
-  });
-
-  getNote(key).then((value) => {
-    textarea.value = value;
-    applyIndicator(value);
-    try { onValueChange?.(value || ""); } catch (_) {}
-  });
-
-  return wrapper;
+  getNote(key).then(apply);
+  return btn;
 }
 
 // ---------- rating control ----------
@@ -290,11 +218,10 @@ async function buildToolbar({ restaurantId, restaurantName, url, compact, collap
 
   if (notePreviewEl) setNotePreview("");
 
-  const noteWidget = await buildWidget({
+  const noteWidget = await buildNoteButton({
     key: storageKey("restaurant", restaurantId),
     label: `Notatka o restauracji: ${restaurantName || restaurantId}`,
     meta: { type: "restaurant", restaurantId, restaurantName, url },
-    compact,
     onValueChange: notePreviewEl ? setNotePreview : null,
   });
 
