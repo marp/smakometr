@@ -1,6 +1,9 @@
 # Smakometr
 Proste rozszerzenie Firefox, które dodaje:
 
+> **[Pobierz ze strony Firefox Add-ons](https://addons.mozilla.org/pl/firefox/addon/smakometr-dla-pyszne-pl/)**
+
+
 - pole notatki obok nazwy restauracji (zarówno na liście wyszukiwania,
   np. `pyszne.pl/na-dowoz/jedzenie/...`, jak i na stronie restauracji),
 - pole notatki obok każdego dania na stronie restauracji,
