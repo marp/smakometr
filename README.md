@@ -54,16 +54,28 @@ pogrupowanych po restauracjach. Można w niej:
 ## Struktura projektu
 
 ```
-manifest.json
-icons/icon.svg
-content/
-  content.js        # wstrzykiwanie pól notatek na stronę
-  content.css
-popup/
-  popup.html        # widok wszystkich notatek
-  popup.js
-  popup.css
+src/
+  manifest.json
+  icons/
+    icon.svg
+    icon-128.png
+  content/
+    content.js        # wstrzykiwanie widgetów na stronę
+    widgets.js        # budowanie buttonów i toolbarów
+    storage.js        # zapis/odczyt browser.storage.local
+    content.css
+    restaurant.css
+    toolbar-card.html
+    toolbar-restaurant.html
+  popup/
+    popup.html        # widok wszystkich notatek
+    popup.js
+    popup.css
 ```
+
+## Prywatność
+
+Rozszerzenie nie zbiera, nie przesyła ani nie udostępnia żadnych danych. Notatki i oceny są zapisywane wyłącznie lokalnie w przeglądarce (`browser.storage.local`) i nigdy nie opuszczają urządzenia. Brak analityki, telemetrii i jakichkolwiek zewnętrznych połączeń.
 
 ## Uwagi techniczne
 
