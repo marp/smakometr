@@ -1,7 +1,10 @@
 # Smakometr dla pyszne.pl
 „Brałem to już kiedyś — było dobre?” Smakometr przypomni! Zapisuj notatki, oceniaj kolorami restauracje i oceniaj dania oraz restauracje na pyszne.pl, żeby już nigdy nie zgadywać przy zamówieniu.
 
-> **[Pobierz ze strony Firefox Add-ons](https://addons.mozilla.org/pl/firefox/addon/smakometr-dla-pyszne-pl/)**
+> **[Pobierz z oficjalnej strony Firefox Add-ons](https://addons.mozilla.org/pl/firefox/addon/smakometr-dla-pyszne-pl/)**
+
+> **[Pobierz z oficjalnej strony Chrome Web Store](https://chromewebstore.google.com/detail/smakometr-dla-pysznepl/cbihankdkalkkmkpmhaopcdieacfjlea)**
+
 
 ## Co potrafi to rozszerzenie?
 - pole notatki obok nazwy restauracji (zarówno na liście wyszukiwania,
